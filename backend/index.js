@@ -20,19 +20,15 @@ app.use('/api/entries', entriesRoutes);
 
 const startServer = async() =>{
     try{
-        mongoose.connect(process.env.MONGO_URI, {
-            useUnifiedTopology: true
-        }).then(() => {
+        console.log('Attempting to start server')
+
+        mongoose.connect(process.env.MONGO_URI).then(() => {
             console.log('MongoDB connected');
             app.listen(PORT, () => {
             console.log(`Server running on port ${PORT}`);
         });
         }).catch(err => {
             console.error('MongoDB connection error:', err);
-        });
-
-        app.listen(PORT, () => {
-            console.log('Server running on port 3000');
         });
     }catch(error)
     {
