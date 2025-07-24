@@ -1,6 +1,6 @@
 import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-const BASE_URL = 'http://localhost:3000/api';
+import {BASE_URL} from '@env'
 
 const api = axios.create({
   baseURL: BASE_URL,
@@ -15,7 +15,7 @@ export const entriesAPI = {
             const response = await api.get('/entries')
             return response.data
         } catch (error){
-            throw error.response?.data || { message: 'Network error' };
+            throw error.response?.data || { message: 'Network error getting entries' };
         }
     },
     getEntry: async (id) => {
@@ -23,24 +23,32 @@ export const entriesAPI = {
             const response = await api.get(`/entries/${id}`);
             return response.data;
         } catch (error) {
-            throw error.response?.data || { message: 'Network error' };
+            throw error.response?.data || { message: 'Network error getting entry' };
         }
     },
     createEntry: async (entryData) => {
         try {
-        const response = await api.post(`/entries`, entryData);
-        return response.data;
+            const response = await api.post(`/entries`, entryData);
+            return response.data;
         } catch (error) {
-        throw error.response?.data || { message: 'Network error' };
+        throw error.response?.data || { message: 'Network error creating entry' };
         }
-  },
+    },
+    updateEntry: async (id, entryData) =>{
+        try{
+            const response = await api.put(`/entries/${id}`, entryData);
+            return response.data
+        } catch(error){
+            throw error.response?.data || { message: 'Network error updating entry' };
 
+        }
+    },
     deleteEntry: async (id) => {
         try {
         const response = await api.delete(`/entries/${id}`);
         return response.data;
         } catch (error) {
-        throw error.response?.data || { message: 'Network error' };
+        throw error.response?.data || { message: 'Network error deleting entry' };
         }
     },
 }
