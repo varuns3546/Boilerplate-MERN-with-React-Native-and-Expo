@@ -3,7 +3,6 @@ import Entry from '../models/Entry.js';
 const router = express.Router();
 
 router.get('/', async (req, res) => {
-    console.log('getting entries entries.js')
     try{
         const entries = await Entry.find()
         res.json({
