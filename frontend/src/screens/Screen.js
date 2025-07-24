@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import {View, Text, TextInput} from 'react-native'
+import {View, Text, TextInput, TouchableOpacity, Alert} from 'react-native'
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { entriesAPI } from '../services/api';
 
@@ -10,7 +10,7 @@ const Screen = () => {
 
     useEffect(()=>{
         loadEntries()
-    })
+    }, [])
 
     const loadEntries = async () => {
         try {
@@ -64,3 +64,5 @@ const Screen = () => {
         </View>
     )
 }
+
+export default Screen
