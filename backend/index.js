@@ -7,6 +7,7 @@ import dotenv from 'dotenv';
 dotenv.config();
 
 import entriesRoutes from './routes/entries.js'
+import authRoutes from './routes/auth.js'
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -16,6 +17,8 @@ app.use(cors())
 app.use(bodyParser.json()); // Parse JSON bodies
 app.use(bodyParser.urlencoded({ extended: true })); // Parse URL-encoded forms
 
+// Routes
+app.use('/api/auth', authRoutes);
 app.use('/api/entries', entriesRoutes);
 
 const startServer = async() =>{
