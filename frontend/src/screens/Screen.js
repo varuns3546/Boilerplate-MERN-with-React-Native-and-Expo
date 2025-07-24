@@ -13,6 +13,7 @@ const Screen = () => {
     }, [])
 
     const loadEntries = async () => {
+        console.log('loading entries')
         try {
             const response = await entriesAPI.getEntries()
             console.log(response)

@@ -9,6 +9,8 @@ const api = axios.create({
 
 export const entriesAPI = {
     getEntries: async () =>{
+        console.log('getting entries api.js')
+
         try{
             const response = await api.get('/entries')
             return response.data
