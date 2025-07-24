@@ -9,6 +9,12 @@ const entrySchema = new mongoose.Schema({
   content: {
     type: String,
     required: true
+  },
+  userId: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User',
+    required: true,
+    index: true // Index for efficient queries
   }
 }, {
   timestamps: true // adds createdAt and updatedAt

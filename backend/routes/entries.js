@@ -1,10 +1,14 @@
 import express from 'express';
 import Entry from '../models/Entry.js';
+import { authenticateToken } from '../middleware/auth.js';
+
+router.use(authenticateToken);
+
 const router = express.Router();
 
 router.get('/', async (req, res) => {
     try{
-        const entries = await Entry.find()
+        const entries = await Entry.find({ userId: req.user._id }).sort({ createdAt: -1 });
         res.json({
             success: true,
             entries: entries || []
@@ -21,7 +25,14 @@ router.get('/', async (req, res) => {
 
 router.get('/:id', async (req, res) => {
     try{
-        const entry = await Entry.findById(req.params.id)
+        const entry = await Entry.findOne({ _id: req.params.id, userId: req.user._id });
+            if (!entry) {
+        return res.status(404).json({
+            success: false,
+            message: 'Entry not found'
+          });
+        }
+        
         res.json({
             success: true,
             entry: entry
@@ -48,7 +59,11 @@ router.post('/', async (req, res) => {
       });
     }
 
-    const newEntry = new Entry({ title, content });
+   const newEntry = new Entry({ 
+            title, 
+            content, 
+            userId: req.user._id 
+        });    
     const savedEntry = await newEntry.save();
 
     res.status(201).json({
@@ -67,16 +82,30 @@ router.post('/', async (req, res) => {
 
 router.delete('/:id', async (req, res) => {
     try{
-        const entry = await Entry.findOneAndDelete(req.params.id);
+        const entry = await Entry.findOneAndDelete({ 
+            _id: req.params.id, 
+            userId: req.user._id 
+        });
         res.json({
             success: true,
+            entry: entry
+        });
+        if (!entry) {
+            return res.status(404).json({
+                success: false,
+                message: 'Entry not found'
+            });
+        }
+        res.json({
+            success: true,
+            message: 'Entry deleted successfully',
             entry: entry
         });
     } catch (error){
         console.error('Error fetching entry:', error); // Add this line
         res.status(500).json({
             success: false,
-            message: 'Failed to get entry'
+            message: 'Failed to delete entry'
         });
     }
     
@@ -93,8 +122,8 @@ router.put('/:id', async (req, res) => {
       });
     }
 
-    const updatedEntry = await Entry.findByIdAndUpdate(
-      req.params.id,
+    const updatedEntry = await Entry.findOneAndUpdate(
+      { _id: req.params.id, userId: req.user._id },
       { title, content },
       { new: true, runValidators: true }
     );
