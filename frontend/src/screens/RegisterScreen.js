@@ -25,6 +25,8 @@ const RegisterScreen = ({navigation}) => {
         orgPassword: ''
       })
 
+    const{firstName, lastName, email, 
+        password, confirmPassword, orgPassword} = formData
     const dispatch = useDispatch()
 
     const {user, isLoading, isError, isSuccess, message} = useSelector(
@@ -32,12 +34,12 @@ const RegisterScreen = ({navigation}) => {
 
     useEffect(() => {
         if(isError){
-            
+           console.log('error', message) 
         }
         if(isSuccess || user){
             navigation.navigate('Dashboard')
         }
-    }, [user, isError, isSuccess, message, dispatch, navigation.navigate])
+    }, [user, isError, isSuccess, message, dispatch])
 
     
     const updateField = (field, value) => {
@@ -49,15 +51,15 @@ const RegisterScreen = ({navigation}) => {
     const onSubmit = () => {
         if(formData.password!==formData.confirmPassword)
         {
-            toast.error('Psswords do not match')
+            console.log('Passwords dont match')
         }else{
             const userData = {
-                firstName: formData.firstName,
-                lastName: formData.lastName,
-                email: formData.email,
-                password: formData.password,
-                confirmPassword: formData.confirmPassword,
-                orgPassword: formData.orgPassword
+                firstName,
+                lastName,
+                email,
+                password,
+                confirmPassword,
+                orgPassword
             }
 
             dispatch(register(userData))

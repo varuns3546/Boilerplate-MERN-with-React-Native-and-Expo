@@ -13,6 +13,9 @@ import {
 } from 'react-native'
 import {useSelector, useDispatch} from 'react-redux'
 import { Ionicons } from '@expo/vector-icons'
+import { login, reset } from '../features/auth/authSlice'
+import Spinner from '../components/Spinner'
+
 
 
 
@@ -21,14 +24,41 @@ const LoginScreen = ({navigation}) => {
         email: '', 
         password: '',
       })
+
+    const { email, password } = formData
+    const dispatch = useDispatch()
+
+     const { user, isLoading, isError, isSuccess, message } = useSelector(
+    (state) => state.auth)
+
+    useEffect(() => {
+        if (isError) {
+            console.log('error', message)
+        }
+
+        if (isSuccess || user) {
+            navigation.navigate('Dashboard')
+        }
+
+        dispatch(reset())
+    }, [user, isError, isSuccess, message, dispatch])
     const updateField = (field, value) => {
         setFormData(prev => ({
             ...prev,
             [field]: value
         }));
     };
-    const onSubmit = () => {
+    const onSubmit = (e) => {
 
+        const userData = {
+        email,
+        password,
+        }
+
+        dispatch(login(userData))
+    }
+    if(isLoading){
+        return <Spinner/>
     }
     return (
     <KeyboardAvoidingView 

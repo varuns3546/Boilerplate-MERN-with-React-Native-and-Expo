@@ -4,7 +4,6 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { Provider } from 'react-redux';
 import { store } from './src/app/store';
 
-import Screen from './src/screens/Screen';
 import RegisterScreen from './src/screens/RegisterScreen';
 import LoginScreen from './src/screens/LoginScreen';
 
@@ -12,7 +11,7 @@ const Stack = createNativeStackNavigator();
 
 export default function App() {
   return (
-    <Provider>
+    <Provider store={store}>
 
       <NavigationContainer>
         <Stack.Navigator 
@@ -45,7 +44,7 @@ export default function App() {
           />
           <Stack.Screen 
             name="Dashboard" 
-            component={Screen} 
+            component={DashboardScreen} 
             options={{ 
               title: 'Dashboard',
               headerShown: false 

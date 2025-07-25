@@ -1,3 +1,4 @@
+import {View, Text} from 'react-native'
 const Spinner = () =>{
     return(
         <View>
