@@ -1,6 +1,12 @@
 import mongoose from 'mongoose';
+import validator from 'validator';
 
 const entrySchema = new mongoose.Schema({
+  user:{
+    type: mongoose.Schema.Types.ObjectId,
+    required: true,
+    ref: 'User'
+  },
   title: {
     type: String,
     required: true,

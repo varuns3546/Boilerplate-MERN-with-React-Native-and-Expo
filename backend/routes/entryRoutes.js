@@ -1,5 +1,5 @@
 import express from 'express';
-import Entry from '../models/Entry.js';
+import Entry from '../models/entryModel.js';
 const router = express.Router();
 
 router.get('/', async (req, res) => {

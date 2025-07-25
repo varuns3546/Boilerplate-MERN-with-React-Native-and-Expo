@@ -6,7 +6,9 @@ import dotenv from 'dotenv';
 
 dotenv.config();
 
-import entriesRoutes from './routes/entries.js'
+import entriesRoutes from './routes/entryRoutes.js'
+import usersRoutes from './routes/userRoutes.js'
+
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -17,6 +19,7 @@ app.use(bodyParser.json()); // Parse JSON bodies
 app.use(bodyParser.urlencoded({ extended: true })); // Parse URL-encoded forms
 
 app.use('/api/entries', entriesRoutes);
+app.use('/api/users', usersRoutes);
 
 const startServer = async() =>{
     try{
