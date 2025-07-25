@@ -1,7 +1,6 @@
 import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import {BASE_URL} from '@env'
-
+import env from 'expo-env'
 const api = axios.create({
   baseURL: 'http://localhost:3000/api',
   timeout: 10000,

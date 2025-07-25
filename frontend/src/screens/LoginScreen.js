@@ -11,7 +11,10 @@ import {
   Platform,
   ScrollView
 } from 'react-native'
+import {useSelector, useDispatch} from 'react-redux'
 import { Ionicons } from '@expo/vector-icons'
+
+
 
 const LoginScreen = () => {
     const [formData, setFormData] = useState({
@@ -35,8 +38,8 @@ const LoginScreen = () => {
         <ScrollView contentContainerStyle={styles.scrollContent}>
         <View style={styles.heading}>
             <View style={styles.titleContainer}>
-            <Ionicons name="person" size={24} color="#007AFF" />
-            <Text style={styles.title}>Login</Text>
+                <Ionicons name="person" size={24} color="#007AFF" />
+                <Text style={styles.title}>Login</Text>
             </View>
         </View>
 
