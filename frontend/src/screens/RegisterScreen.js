@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react'
 import {useSelector, useDispatch} from 'react-redux'
-import {toast} from 'react-toastify'
 import { 
   View, 
   Text, 
@@ -33,7 +32,7 @@ const RegisterScreen = ({navigation}) => {
 
     useEffect(() => {
         if(isError){
-            toast.error(message)
+            
         }
         if(isSuccess || user){
             navigation.navigate('Dashboard')
