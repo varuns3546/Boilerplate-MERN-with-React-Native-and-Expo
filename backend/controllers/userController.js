@@ -37,7 +37,8 @@ const registerUser = asyncHandler(async (req, res) => {
             firstName: user.firstName,
             lastName: user.lastName,
             email: user.email,
-            accountType: user.accountType
+            accountType: user.accountType,
+            token: generateToken(user._id)
         })
     } else {
         res.status(400)
@@ -63,7 +64,9 @@ const loginUser = asyncHandler(async (req, res) => {
             firstName: user.firstName,
             lastName: user.lastName,
             email: user.email,
-            accountType: user.accountType
+            accountType: user.accountType,
+            token: generateToken(user._id)
+
         })
     } else {
         res.status(400)
@@ -75,9 +78,21 @@ const loginUser = asyncHandler(async (req, res) => {
 
 })
 
+//private route
 const getUser = asyncHandler(async (req, res) => {
-    res.json({message: 'Get user data'})
+    const {_id, firstName, lastName, email, accountType} = await User.findById(req.user._id)
+    res.status(200).json({
+        _id,
+        firstName,
+        lastName,
+        email,
+        accountType
+    })
 })
+
+const generateToken = (id) => {
+    return jwt.sign({id}, process.env.JWT_SECRET, {expiresIn: '30d'})
+}
 
 export default {
     registerUser,
