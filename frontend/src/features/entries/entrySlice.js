@@ -1,6 +1,5 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
-import entrieservice from './entrieservice'
-
+import entryService from './entryService'
 const initialState = {
   entries: [],
   isError: false,
@@ -15,7 +14,7 @@ export const createEntry = createAsyncThunk(
   async (entryData, thunkAPI) => {
     try {
       const token = thunkAPI.getState().auth.user.token
-      return await entrieservice.createEntry(entryData, token)
+      return await entryService.createEntry(entryData, token)
     } catch (error) {
       const message =
         (error.response &&
@@ -29,12 +28,12 @@ export const createEntry = createAsyncThunk(
 )
 
 // Get user entries
-export const getEntrys = createAsyncThunk(
+export const getEntries = createAsyncThunk(
   'entries/getAll',
   async (_, thunkAPI) => {
     try {
       const token = thunkAPI.getState().auth.user.token
-      return await entrieservice.getEntrys(token)
+      return await entryService.getEntries(token)
     } catch (error) {
       const message =
         (error.response &&
@@ -53,7 +52,7 @@ export const deleteEntry = createAsyncThunk(
   async (id, thunkAPI) => {
     try {
       const token = thunkAPI.getState().auth.user.token
-      return await entrieservice.deleteEntry(id, token)
+      return await entryService.deleteEntry(id, token)
     } catch (error) {
       const message =
         (error.response &&
@@ -66,7 +65,7 @@ export const deleteEntry = createAsyncThunk(
   }
 )
 
-export const entrieslice = createSlice({
+export const entrySlice = createSlice({
   name: 'entry',
   initialState,
   reducers: {
@@ -87,15 +86,15 @@ export const entrieslice = createSlice({
         state.isError = true
         state.message = action.payload
       })
-      .addCase(getEntrys.pending, (state) => {
+      .addCase(getEntries.pending, (state) => {
         state.isLoading = true
       })
-      .addCase(getEntrys.fulfilled, (state, action) => {
+      .addCase(getEntries.fulfilled, (state, action) => {
         state.isLoading = false
         state.isSuccess = true
         state.entries = action.payload
       })
-      .addCase(getEntrys.rejected, (state, action) => {
+      .addCase(getEntries.rejected, (state, action) => {
         state.isLoading = false
         state.isError = true
         state.message = action.payload
@@ -119,4 +118,4 @@ export const entrieslice = createSlice({
 })
 
 export const { reset } = entrieslice.actions
-export default entrieslice.reducer
+export default entrySlice.reducer
