@@ -1,8 +1,8 @@
-import {View} from 'react-native'
+import {View, Text} from 'react-native'
 const DashboardScreen = ({navigation}) => {
     return(
         <View>
-
+            <Text>Dashboard</Text>
         </View
     >)
 }

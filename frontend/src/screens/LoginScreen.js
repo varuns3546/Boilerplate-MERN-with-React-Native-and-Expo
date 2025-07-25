@@ -99,6 +99,12 @@ const LoginScreen = ({navigation}) => {
             <TouchableOpacity style={styles.button} onPress={onSubmit}>
             <Text style={styles.buttonText}>Submit</Text>
             </TouchableOpacity>
+            <View style={styles.footer}>
+                <Text style={styles.footerText}>Don't have an account? </Text>
+                <TouchableOpacity onPress={() => navigation.navigate('Register')}>
+                    <Text style={styles.linkText}>Sign Up</Text>
+                </TouchableOpacity>
+            </View>
         </View>
         </ScrollView>
     </KeyboardAvoidingView>
@@ -165,6 +171,20 @@ const styles = StyleSheet.create({
     color: '#fff',
     fontSize: 18,
     fontWeight: 'bold',
+    },
+     footer: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    marginTop: 30,
+    },
+     footerText: {
+    fontSize: 16,
+    color: '#666',
+    },
+    linkText: {
+    fontSize: 16,
+    color: '#007AFF',
+    fontWeight: '600',
     },
 })
     
