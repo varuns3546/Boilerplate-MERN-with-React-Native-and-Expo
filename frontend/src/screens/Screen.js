@@ -90,7 +90,7 @@ const Screen = () => {
             <TouchableOpacity onPress={() => handleEntryPressed(entry)} style={styles.button}>
                 <Text>Update</Text>
             </TouchableOpacity>
-            <TouchableOpacity onPress={handleDelete} style={styles.button}>
+            <TouchableOpacity onPress={handleDelete(entry._id)} style={styles.button}>
                 <Text>Delete</Text>
             </TouchableOpacity>
         </View>
