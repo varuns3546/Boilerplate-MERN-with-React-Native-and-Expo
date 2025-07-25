@@ -16,7 +16,7 @@ import { Ionicons } from '@expo/vector-icons'
 
 
 
-const LoginScreen = () => {
+const LoginScreen = ({navigation}) => {
     const [formData, setFormData] = useState({
         email: '', 
         password: '',

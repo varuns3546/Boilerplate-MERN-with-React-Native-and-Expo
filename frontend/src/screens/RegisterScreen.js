@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from 'react'
+import {useSelector, useDispatch} from 'react-redux'
+import {toast} from 'react-toastify'
 import { 
   View, 
   Text, 
@@ -12,8 +14,9 @@ import {
   ScrollView
 } from 'react-native'
 import { Ionicons } from '@expo/vector-icons'
-
-const RegisterScreen = () => {
+import {register, reset} from '../features/auth/authSlice'
+import Spinner from '../components/Spinner'
+const RegisterScreen = ({navigation}) => {
     const [formData, setFormData] = useState({
         firstName: '', 
         lastName: '', 
@@ -22,6 +25,22 @@ const RegisterScreen = () => {
         confirmPassword: '', 
         orgPassword: ''
       })
+
+    const dispatch = useDispatch()
+
+    const {user, isLoading, isError, isSuccess, message} = useSelector(
+        (state) => state.auth)
+
+    useEffect(() => {
+        if(isError){
+            toast.error(message)
+        }
+        if(isSuccess || user){
+            navigation.navigate('Dashboard')
+        }
+    }, [user, isError, isSuccess, message, dispatch, navigation.navigate])
+
+    
     const updateField = (field, value) => {
         setFormData(prev => ({
             ...prev,
@@ -29,7 +48,24 @@ const RegisterScreen = () => {
         }));
     };
     const onSubmit = () => {
+        if(formData.password!==formData.confirmPassword)
+        {
+            toast.error('Psswords do not match')
+        }else{
+            const userData = {
+                firstName: formData.firstName,
+                lastName: formData.lastName,
+                email: formData.email,
+                password: formData.password,
+                confirmPassword: formData.confirmPassword,
+                orgPassword: formData.orgPassword
+            }
 
+            dispatch(register(userData))
+        }
+    }
+    if (isLoading){
+        return <Spinner/>
     }
     return (
     <KeyboardAvoidingView 
