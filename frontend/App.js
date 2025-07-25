@@ -12,8 +12,7 @@ const Stack = createNativeStackNavigator();
 
 export default function App() {
   return (
-    <Provider>
-
+    <Provider store={store}>
       <NavigationContainer>
         <Stack.Navigator 
           initialRouteName="Login"
