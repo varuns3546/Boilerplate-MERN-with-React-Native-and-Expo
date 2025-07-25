@@ -54,7 +54,7 @@ const LoginScreen = ({navigation}) => {
         email,
         password,
         }
-
+        console.log('Submit pressed')
         dispatch(login(userData))
     }
     if(isLoading){

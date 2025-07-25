@@ -2,7 +2,6 @@
   "name": "frontend",
   "version": "1.0.0",
   "main": "index.js",
-  "proxy": "https://opulent-spoon-v6p45vjj7w5p26qrg-3000.app.github.dev",
   "scripts": {
     "start": "expo start",
     "android": "expo start --android",

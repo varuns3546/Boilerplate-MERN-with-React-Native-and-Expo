@@ -32,6 +32,7 @@ const registerUser = asyncHandler(async (req, res) => {
     })
 
     if(user){
+        console.log('Success registering', user.firstName)
         res.status(201).json({
             _id: user._id,
             firstName: user.firstName,
@@ -59,6 +60,8 @@ const loginUser = asyncHandler(async (req, res) => {
 
     // Check password
     if (user && (await bcrypt.compare(password, user.password))){
+        console.log('Success logging in', user.firstName)
+
         res.json({
             _id: user._id,
             firstName: user.firstName,
