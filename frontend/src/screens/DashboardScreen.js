@@ -39,24 +39,17 @@ const DashboardScreen = ({navigation}) => {
                 <Text>Welcome, {user && user.firstName}</Text>
             </View>
             <EntryForm />
-           <View>
-            {isLoading ? (
-                    <View>
-                <Spinner />
-                </View>
-            ) : (
-                <View style={styles.entries}>
-               {!isError && entries?.entries?.length > 0 && (
+            
+            <View style={styles.entries}>
+               {!isError && entries?.length > 0 && (
                 <>
                     <View style={styles.entriesList}>
-                        {entries.entries.map((entry, index) => (
+                        {entries.map((entry, index) => (
                             <EntryItem key={index} entry={entry} />
                         ))}
                     </View>
                 </>
                 )}
-                </View>
-            )}
             </View>
 
         </ScrollView>

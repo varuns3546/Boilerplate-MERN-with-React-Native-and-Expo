@@ -95,7 +95,7 @@ export const entrySlice = createSlice({
         console.log('get entries payload', action.payload.entries)
         state.isLoading = false
         state.isSuccess = true
-        state.entries = action.payload
+        state.entries = action.payload.entries
       })
       .addCase(getEntries.rejected, (state, action) => {
         state.isLoading = false
@@ -106,7 +106,6 @@ export const entrySlice = createSlice({
         state.isLoading = true
       })
       .addCase(deleteEntry.fulfilled, (state, action) => {
-        console.log('entries before filter', state.isLoading, state.entries, state.entries.entries);
         state.isLoading = false
         state.isSuccess = true
         state.entries = state.entries.filter(
