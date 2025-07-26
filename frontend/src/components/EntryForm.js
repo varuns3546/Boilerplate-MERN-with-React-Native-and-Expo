@@ -1,15 +1,17 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { createEntry } from '../features/entries/entrySlice'
 import { View, Text, TextInput, TouchableOpacity, StyleSheet } from 'react-native'
-
+import { loadUser } from '../features/auth/authSlice'
 const EntryForm = ({navigation}) => {
     const [formData, setFormData] = useState({
         title: '',
         content: '',
     })
     const dispatch = useDispatch()
-
+    useEffect(() => {
+            dispatch(loadUser())
+        }, [])
     const handleSubmit = () => {
         dispatch(createEntry(formData))
         setFormData({

@@ -1,7 +1,7 @@
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import axios from 'axios'
 // import {API_BASE_URL} from '@env'
-const API_URL = 'http://localhost:3000/api/users/'
+const API_URL = 'https://opulent-spoon-v6p45vjj7w5p26qrg-3000.app.github.dev/api/users/'
 
 // Register user
 const register = async (userData) => {
@@ -16,11 +16,9 @@ const register = async (userData) => {
 
 // Login user
 const login = async (userData) => {
-  console.log('attempting login in authService.js')
   const response = await axios.post(API_URL + 'login', userData)
 
   if (response.data) {
-    console.log(response.data)
     await AsyncStorage.setItem('user', JSON.stringify(response.data))
   }
 

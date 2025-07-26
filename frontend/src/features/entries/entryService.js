@@ -1,7 +1,7 @@
 import axios from 'axios'
 import {API_BASE_URL} from '@env'
 //const API_URL = API_BASE_URL+'/api/entries/'
-const API_URL = 'http://localhost:3000/api/entries/'
+const API_URL = 'https://opulent-spoon-v6p45vjj7w5p26qrg-3000.app.github.dev/api/entries/'
 // Create new entry
 const createEntry = async (entryData, token) => {
   const config = {
@@ -37,7 +37,7 @@ const deleteEntry = async (entryId, token) => {
   }
 
   const response = await axios.delete(API_URL + entryId, config)
-
+  
   return response.data
 }
 

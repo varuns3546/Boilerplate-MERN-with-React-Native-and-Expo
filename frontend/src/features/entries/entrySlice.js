@@ -52,7 +52,9 @@ export const deleteEntry = createAsyncThunk(
   async (id, thunkAPI) => {
     try {
       const token = thunkAPI.getState().auth.user.token
-      return await entryService.deleteEntry(id, token)
+      data = await entryService.deleteEntry(id, token)
+      console.log('delete entry result', data)
+      return data
     } catch (error) {
       const message =
         (error.response &&
@@ -90,6 +92,7 @@ export const entrySlice = createSlice({
         state.isLoading = true
       })
       .addCase(getEntries.fulfilled, (state, action) => {
+        console.log('get entries payload', action.payload.entries)
         state.isLoading = false
         state.isSuccess = true
         state.entries = action.payload
@@ -103,11 +106,14 @@ export const entrySlice = createSlice({
         state.isLoading = true
       })
       .addCase(deleteEntry.fulfilled, (state, action) => {
+        console.log('entries before filter', state.isLoading, state.entries, state.entries.entries);
         state.isLoading = false
         state.isSuccess = true
         state.entries = state.entries.filter(
           (entry) => entry._id !== action.payload.id
         )
+        console.log('entries after filter', state.entries);
+
       })
       .addCase(deleteEntry.rejected, (state, action) => {
         state.isLoading = false

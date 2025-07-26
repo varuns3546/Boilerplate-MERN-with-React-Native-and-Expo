@@ -5,11 +5,14 @@ import EntryForm from '../components/EntryForm'
 import EntryItem from '../components/EntryItem'
 import Spinner from '../components/Spinner'
 import { getEntries, reset } from '../features/entries/entrySlice'
+import { loadUser } from '../features/auth/authSlice'
 const DashboardScreen = ({navigation}) => {
     const dispatch = useDispatch()
-    const {user} = useSelector((state) => state.auth)
     const {entries, isError, isLoading, message} = useSelector((state) => state.entries)
-
+    useEffect(() => {
+        dispatch(loadUser())
+    }, [])
+    const {user} = useSelector((state) => state.auth)
     useEffect(() => {
         if (!user) {
             navigation.navigate('Login')
@@ -33,36 +36,29 @@ const DashboardScreen = ({navigation}) => {
                 <Text style={styles.title}>Dashboard</Text>
             </View>
             <View style={styles.content}>
-                <Text>Welcome, {user && user.name}</Text>
+                <Text>Welcome, {user && user.firstName}</Text>
             </View>
             <EntryForm />
-
-            <View style={styles.entries}>
-                {console.log('Entries we have:', entries.entries)}
-                {console.log('Entries length:', entries.entries?.length || 0)}
-                {console.log('Is loading:', isLoading)}
-                {console.log('Is error:', isError)}
-                {console.log('Message:', message)}
-                
-                {isLoading && <Spinner />}
-                
-                {isError && (
-                    <Text style={styles.errorText}>Error: {message}</Text>
-                )}
-                
-                {!isLoading && !isError && entries && entries.length > 0 && (
-                    console.log('we have entries'),
+           <View>
+            {isLoading ? (
+                    <View>
+                <Spinner />
+                </View>
+            ) : (
+                <View style={styles.entries}>
+               {!isError && entries?.entries?.length > 0 && (
+                <>
                     <View style={styles.entriesList}>
-                        {entries.entries.map((entry) => (
-                            <Text>Hello</Text>
+                        {entries.entries.map((entry, index) => (
+                            <EntryItem key={index} entry={entry} />
                         ))}
                     </View>
+                </>
                 )}
-                
-                {!isLoading && !isError && (!entries || entries.length === 0) && (
-                    <Text style={styles.noEntriesText}>No entries found</Text>
-                )}
+                </View>
+            )}
             </View>
+
         </ScrollView>
     )
 }
