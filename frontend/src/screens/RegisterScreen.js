@@ -150,6 +150,13 @@ const RegisterScreen = ({navigation}) => {
             <TouchableOpacity style={styles.button} onPress={onSubmit}>
             <Text style={styles.buttonText}>Submit</Text>
             </TouchableOpacity>
+
+            <View style={styles.footer}>
+                <Text style={styles.footerText}>Already have an account? </Text>
+                <TouchableOpacity onPress={() => navigation.navigate('Login')}>
+                    <Text style={styles.linkText}>Sign In</Text>
+                </TouchableOpacity>
+          </View>
         </View>
         </ScrollView>
     </KeyboardAvoidingView>
@@ -216,6 +223,20 @@ const styles = StyleSheet.create({
     color: '#fff',
     fontSize: 18,
     fontWeight: 'bold',
+    },
+    footer: {
+        flexDirection: 'row',
+        justifyContent: 'center',
+        marginTop: 30,
+    },
+    footerText: {
+        fontSize: 16,
+        color: '#666',
+    },
+    linkText: {
+        fontSize: 16,
+        color: '#007AFF',
+        fontWeight: '600',
     },
 })
     

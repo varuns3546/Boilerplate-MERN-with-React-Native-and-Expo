@@ -75,10 +75,6 @@ const loginUser = asyncHandler(async (req, res) => {
         res.status(400)
         throw new Error('Invalid credentials')
     }
-    
-    res.json({message: 'Login'})
-
-
 })
 
 //private route

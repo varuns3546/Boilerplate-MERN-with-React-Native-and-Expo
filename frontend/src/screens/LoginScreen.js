@@ -77,24 +77,24 @@ const LoginScreen = ({navigation}) => {
 
             <View style={styles.formGroup}>
                 <TextInput
-                style={styles.input}
-                placeholder="Email"
-                value={formData.email}
-                onChangeText={(value) => updateField('email', value)}
-                keyboardType="email-address"
-                autoCapitalize="none"
-                autoCorrect={false}
+                    style={styles.input}
+                    placeholder="Email"
+                    value={formData.email}
+                    onChangeText={(value) => updateField('email', value)}
+                    keyboardType="email-address"
+                    autoCapitalize="none"
+                    autoCorrect={false}
                 />
             </View>
             <View style={styles.formGroup}>
-            <TextInput
-                style={styles.input}
-                placeholder="Password"
-                value={formData.password}
-                onChangeText={(value) => updateField('password', value)}
-                secureTextEntry
-                autoCapitalize="none"
-            />
+                <TextInput
+                    style={styles.input}
+                    placeholder="Password"
+                    value={formData.password}
+                    onChangeText={(value) => updateField('password', value)}
+                    secureTextEntry
+                    autoCapitalize="none"
+                />
             </View>
             <TouchableOpacity style={styles.button} onPress={onSubmit}>
             <Text style={styles.buttonText}>Submit</Text>

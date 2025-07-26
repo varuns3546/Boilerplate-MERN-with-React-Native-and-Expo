@@ -117,5 +117,5 @@ export const entrySlice = createSlice({
   },
 })
 
-export const { reset } = entrieslice.actions
+export const { reset } = entrySlice.actions
 export default entrySlice.reducer
