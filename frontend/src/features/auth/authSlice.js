@@ -1,4 +1,5 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
+import AsyncStorage from '@react-native-async-storage/async-storage'
 import authService from './authService'
 
 const initialState = {
@@ -14,7 +15,6 @@ export const loadUser = createAsyncThunk(
   async (_, thunkAPI) => {
     try {
       const user = await AsyncStorage.getItem('user')
-      initialState.user = user
       return user ? JSON.parse(user) : null
     } catch (error) {
       return thunkAPI.rejectWithValue('Failed to load user from storage')
@@ -69,8 +69,17 @@ export const authSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
+      .addCase(loadUser.pending, (state) => {
+        state.isLoading = true
+      })
       .addCase(loadUser.fulfilled, (state, action) => {
+        state.isLoading = false
         state.user = action.payload
+      })
+      .addCase(loadUser.rejected, (state, action) => {
+        state.isLoading = false
+        state.isError = true
+        state.message = action.payload
       })
       .addCase(register.pending, (state) => {
         state.isLoading = true

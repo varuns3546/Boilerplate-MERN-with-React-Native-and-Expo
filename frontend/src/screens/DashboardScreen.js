@@ -1,11 +1,11 @@
 import { useEffect } from 'react'
-import {ScrollView, View, Text, StyleSheet} from 'react-native'
+import {ScrollView, View, Text, StyleSheet, TouchableOpacity} from 'react-native'
 import {useSelector, useDispatch} from 'react-redux'
 import EntryForm from '../components/EntryForm'
 import EntryItem from '../components/EntryItem'
 import Spinner from '../components/Spinner'
 import { getEntries, reset } from '../features/entries/entrySlice'
-import { loadUser } from '../features/auth/authSlice'
+import { loadUser, logout } from '../features/auth/authSlice'
 const DashboardScreen = ({navigation}) => {
     const dispatch = useDispatch()
     const {entries, isError, isLoading, message} = useSelector((state) => state.entries)
@@ -30,10 +30,18 @@ const DashboardScreen = ({navigation}) => {
         }
     }, [isError, message])
 
+    const handleLogout = () => {
+        dispatch(logout())
+        navigation.navigate('Login')
+    }
+
     return(
         <ScrollView>
             <View style={styles.header}>
                 <Text style={styles.title}>Dashboard</Text>
+                <TouchableOpacity style={styles.logoutButton} onPress={handleLogout}>
+                    <Text style={styles.logoutText}>Logout</Text>
+                </TouchableOpacity>
             </View>
             <View style={styles.content}>
                 <Text>Welcome, {user && user.firstName}</Text>
@@ -61,6 +69,9 @@ const styles = StyleSheet.create({
         backgroundColor: '#007AFF',
         borderBottomWidth: 1,
         borderBottomColor: '#ccc',
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
     },
     title: {
         fontSize: 24,
@@ -92,6 +103,17 @@ const styles = StyleSheet.create({
         fontSize: 16,
         textAlign: 'center',
         marginTop: 16,
+    },
+    logoutButton: {
+        backgroundColor: '#FF3B30',
+        paddingVertical: 8,
+        paddingHorizontal: 12,
+        borderRadius: 8,
+    },
+    logoutText: {
+        color: '#fff',
+        fontSize: 16,
+        fontWeight: 'bold',
     },
 })
 export default DashboardScreen
