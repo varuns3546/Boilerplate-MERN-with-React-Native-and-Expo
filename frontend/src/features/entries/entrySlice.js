@@ -92,10 +92,9 @@ export const entrySlice = createSlice({
         state.isLoading = true
       })
       .addCase(getEntries.fulfilled, (state, action) => {
-        console.log('get entries payload', action.payload.entries)
         state.isLoading = false
         state.isSuccess = true
-        state.entries = action.payload.entries
+        state.entries = action.payload
       })
       .addCase(getEntries.rejected, (state, action) => {
         state.isLoading = false
@@ -109,7 +108,7 @@ export const entrySlice = createSlice({
         state.isLoading = false
         state.isSuccess = true
         state.entries = state.entries.filter(
-          (entry) => entry._id !== action.payload.id
+          (entry) => entry._id !== action.payload
         )
         console.log('entries after filter', state.entries);
 

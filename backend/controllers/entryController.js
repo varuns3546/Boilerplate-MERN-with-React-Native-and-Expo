@@ -5,7 +5,7 @@ import User from '../models/userModel.js';
 const getEntries = asyncHandler(async (req, res) => {
     try{
         const entries = await Entry.find({user: req.user._id})
-        res.json({entries});
+        res.json(entries);
     } catch (error){
         console.error('Error fetching entries:', error); // Add this line
         res.status(500).json({
@@ -73,7 +73,7 @@ const deleteEntry = asyncHandler(async (req, res) => {
 
   await entry.deleteOne()
 
-  res.status(200).json({ id: req.params.id })
+  res.status(200).json(req.params.id)
 })
 
 const updateEntry = asyncHandler(async (req, res) => {

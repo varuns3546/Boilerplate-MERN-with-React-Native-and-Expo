@@ -37,7 +37,6 @@ const deleteEntry = async (entryId, token) => {
   }
 
   const response = await axios.delete(API_URL + entryId, config)
-  
   return response.data
 }
 
