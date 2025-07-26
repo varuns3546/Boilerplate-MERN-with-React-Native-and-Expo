@@ -52,7 +52,7 @@ export const deleteEntry = createAsyncThunk(
   async (id, thunkAPI) => {
     try {
       const token = thunkAPI.getState().auth.user.token
-      data = await entryService.deleteEntry(id, token)
+      const data = await entryService.deleteEntry(id, token)
       console.log('delete entry result', data)
       return data
     } catch (error) {
@@ -81,7 +81,13 @@ export const entrySlice = createSlice({
       .addCase(createEntry.fulfilled, (state, action) => {
         state.isLoading = false
         state.isSuccess = true
-        state.entries.push(action.payload)
+        // Ensure state.entries is an array before pushing
+        if (Array.isArray(state.entries)) {
+          state.entries.push(action.payload)
+        } else {
+          console.error('state.entries is not an array:', state.entries)
+          state.entries = [action.payload]
+        }
       })
       .addCase(createEntry.rejected, (state, action) => {
         state.isLoading = false
@@ -92,10 +98,11 @@ export const entrySlice = createSlice({
         state.isLoading = true
       })
       .addCase(getEntries.fulfilled, (state, action) => {
-        console.log('get entries payload', action.payload.entries)
+        console.log('get entries payload', action.payload)
         state.isLoading = false
         state.isSuccess = true
-        state.entries = action.payload
+        // If payload has entries property, use it; otherwise use payload directly
+        state.entries = action.payload.entries || action.payload
       })
       .addCase(getEntries.rejected, (state, action) => {
         state.isLoading = false
@@ -106,14 +113,18 @@ export const entrySlice = createSlice({
         state.isLoading = true
       })
       .addCase(deleteEntry.fulfilled, (state, action) => {
-        console.log('entries before filter', state.isLoading, state.entries, state.entries.entries);
+        console.log('entries before filter', state.isLoading, state.entries);
         state.isLoading = false
         state.isSuccess = true
-        state.entries = state.entries.filter(
-          (entry) => entry._id !== action.payload.id
-        )
+        // Ensure state.entries is an array before filtering
+        if (Array.isArray(state.entries)) {
+          state.entries = state.entries.filter(
+            (entry) => entry._id !== action.payload.id
+          )
+        } else {
+          console.error('state.entries is not an array:', state.entries)
+        }
         console.log('entries after filter', state.entries);
-
       })
       .addCase(deleteEntry.rejected, (state, action) => {
         state.isLoading = false
