@@ -35,7 +35,7 @@ const styles = StyleSheet.create({
         marginBottom: 8,
     },
     deleteButton: {
-        backgroundColor: '#ff0000',
+        backgroundColor: '#dc3545',
         padding: 10,
         borderRadius: 8,
         alignItems: 'center',
